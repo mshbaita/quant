@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import List
 from delta.tables import DeltaTable
 
@@ -9,12 +9,14 @@ from utils.config import config
 
 class BaseTable(ABC):
     def __init__(self, spark: SparkSession, table_name: str, source_df: DataFrame,
-                 cols: List[str], partitioning_cols: List[str] = None):
+                 cols: List[str], id_col: str, partitioning_cols: List[str] = None):
         self._spark = spark
         self.__source_dataframe = source_df
         self.__table_name = table_name
         self.__cols = cols
+        self.__id_col = id_col
         self.__partitioning_cols = partitioning_cols
+
 
     def __project_cols(self, df: DataFrame) -> DataFrame:
         return df.select(self.__cols)
@@ -80,6 +82,7 @@ class BaseTable(ABC):
 
     def execute(self):
         dataframe = self.__project_cols(df=self.__source_dataframe)
+        dataframe = dataframe.dropDuplicates([self.__id_col])
         dataframe.cache()
         dataframe = self._pre_save_process(dataframe)
         self.__load_table(df=dataframe)

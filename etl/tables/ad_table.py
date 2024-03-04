@@ -44,5 +44,6 @@ class AdsTable(BaseTable):
                   "created_at",
                   "updated_at"
                   ],
+            id_col="id",
             partitioning_cols=["district_name_en"],
         )
