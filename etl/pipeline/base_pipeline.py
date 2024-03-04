@@ -37,4 +37,5 @@ class BasePipeline(ABC):
     def execute(self):
         extracted_sources_dfs = self.__execute_extractors()
         processed_df = self._process_extracted_sources(sources_dataframes=extracted_sources_dfs)
+        processed_df.dropDuplicates()
         self.__execute_tables(processed_df=processed_df)

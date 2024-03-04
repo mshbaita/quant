@@ -7,10 +7,12 @@ class AdsTable(BaseTable):
     def __init__(self, spark: SparkSession, source_df: DataFrame):
         super().__init__(
             spark,
-            table_name="ad",
+            table_name="ad_detail",
             source_df=source_df,
             cols=["id",
                   "district_id",
+                  "property_type_id",
+                  "district_name_en",
                   "property_age_less_than",
                   "number_of_apartments",
                   "number_of_bedrooms",
@@ -38,14 +40,9 @@ class AdsTable(BaseTable):
                   "toilets_num",
                   "latitude",
                   "longitude",
-                  "region_name_ar",
-                  "region_name_en",
-                  "province_name",
-                  "nearest_city_name_ar",
-                  "nearest_city_name_en",
                   "property_age_range",
                   "created_at",
                   "updated_at"
                   ],
-            partitioning_cols=["district_id"],
+            partitioning_cols=["district_name_en"],
         )

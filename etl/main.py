@@ -31,7 +31,7 @@ def main():
              .config("spark.hadoop.fs.s3a.access.key", config.AWS_ACCESS_KEY_ID)
              .config("spark.hadoop.fs.s3a.secret.key", config.AWS_SECRET_ACCESS_KEY)
              .config("spark.hadoop.fs.s3a.endpoint", "s3.amazonaws.com")
-             .config("spark.sql.warehouse.dir", config.DATA_LAKE_S3_BUCKET_URL)
+             .config("spark.sql.warehouse.dir", config.DATA_WAREHOUSE_S3_BUCKET_URL)
              .getOrCreate())
 
     AdsDataPipeline(spark=spark).execute()
