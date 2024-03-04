@@ -42,7 +42,9 @@ class AdsTable(BaseTable):
                   "longitude",
                   "property_age_range",
                   "created_at",
-                  "updated_at"
+                  "updated_at",
+                  "data_source"
+
                   ],
             id_col="id",
             partitioning_cols=["district_name_en"],

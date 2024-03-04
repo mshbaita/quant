@@ -62,6 +62,12 @@ class AdCSVExtractor(BaseExtractor):
         dataframe = self.__translate_columns(dataframe)
         dataframe = dataframe.dropna(subset=['price', 'space'])
         # Convert data types - Example: Ensuring 'Price' and 'Space' are of type float
-        dataframe = dataframe.withColumn('price', F.col('price').cast('float'))
-        dataframe = dataframe.withColumn('space', F.col('space').cast('float'))
+        dataframe = (dataframe
+                     .withColumn('price', F.col('price').cast('float'))
+                     .withColumn('space', F.col('space').cast('float'))
+                     .withColumn("data_source", F.lit("ad_csv_data"))
+                     )
+
+
+
         return dataframe

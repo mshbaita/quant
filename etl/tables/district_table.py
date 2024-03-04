@@ -18,7 +18,8 @@ class LocationTable(BaseTable):
                   "region_name_en",
                   "province_name",
                   "nearest_city_name_ar",
-                  "nearest_city_name_en"
+                  "nearest_city_name_en",
+                  "data_source"
                   ],
             id_col="district_id"
         )

@@ -61,9 +61,9 @@ class AdAPIExtractor(BaseExtractor):
     def _process(self, dataframe: DataFrame):
         # First, explode the 'data' array to flatten it
         columns_map_list = list(COLUMNS_MAP)
-        test = (
+        return (
             dataframe
             .withColumn("data", F.explode(F.col("data")))
+            .withColumn("data_source", F.lit("ad_api_data"))
             .selectExpr(*columns_map_list)
         )
-        return test

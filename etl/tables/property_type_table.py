@@ -13,6 +13,7 @@ class PropertyTable(BaseTable):
             cols=["property_type_id",
                   "property_type_ar",
                   "property_type",
+                  "data_source"
                   ],
             id_col="property_type_id"
 

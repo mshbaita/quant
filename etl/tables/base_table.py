@@ -17,7 +17,6 @@ class BaseTable(ABC):
         self.__id_col = id_col
         self.__partitioning_cols = partitioning_cols
 
-
     def __project_cols(self, df: DataFrame) -> DataFrame:
         return df.select(self.__cols)
 
