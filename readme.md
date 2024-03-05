@@ -4,7 +4,7 @@
 The Quant Data Platform is designed to streamline the process of data collection, extraction, transformation, and loading (ETL). It consists of three main components: 
 1. collector
 2. etl
-3. EDA. 
+3. eda
 
 The platform facilitates the acquisition of data from multiple sources, processes this data, and organizes it into a structured format suitable for analysis and reporting.
 ![quant_data_platform.jpg](quant_data_platform.jpg)
@@ -61,15 +61,8 @@ To set up the Quant Data Platform, follow these steps:
 
 * Running the ETL process: Navigate to the etl directory and execute the main.py script to perform the ETL operations and populate the data warehouse.
 
-### Contributing
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
-
 ### Versioning
 1.0.0
 
 ### Authors
 Mohammad Shubaita - Initial work - [My LinkedIn](https://www.linkedin.com/in/mohamadshbaitah/) 
-
-### License
-This project is for learning and specific task oriented - see the LICENSE.md file for details.
-
