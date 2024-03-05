@@ -25,7 +25,7 @@ def hash_values(*values):
 
     return hash_hex
 @F.udf(returnType=T.StringType())
-def struct_gef(root, path, default_value):
+def struct_get(root, path, default_value):
     fields = path.split(".")
     last_item = fields[-1]
     fields = fields[:-1]
