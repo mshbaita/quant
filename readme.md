@@ -7,7 +7,7 @@ The Quant Data Platform is designed to streamline the process of data collection
 3. EDA. 
 
 The platform facilitates the acquisition of data from multiple sources, processes this data, and organizes it into a structured format suitable for analysis and reporting.
-
+![quant_data_platform.jpg](quant_data_platform.jpg)
 ### Project Structure
 #### Collector
 The collector module is responsible for gathering data from two different sources: API and CSV files.

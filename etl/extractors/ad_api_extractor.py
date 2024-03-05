@@ -67,7 +67,7 @@ class AdAPIExtractor(BaseExtractor):
         return (
             dataframe
             .withColumn("data", F.explode(F.col("data")))
-            .withColumn("rent_type", struct_get(F.col("data"), F.lit("data.rentType"),F.lit(None)))
+            .withColumn("rent_type", struct_get(F.col("data"), F.lit("data.rentType"), F.lit(None)))
             .withColumn("data_source", F.lit("ad_api_data"))
             .selectExpr(*columns_map_list)
         )
