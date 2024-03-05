@@ -24,37 +24,6 @@ class BaseTable(ABC):
         return df
 
     def __load_table(self, df: DataFrame):
-        target_path = f"{config.DATA_WAREHOUSE_S3_BUCKET_URL}/{self.__table_name}"
-
-        # # Check if the Delta table exists at the target path
-        # if DeltaTable.isDeltaTable(self._spark, target_path):
-        #     # Load the DeltaTable object for the existing Delta table
-        #     deltaTable = DeltaTable.forPath(self._spark, target_path)
-        #
-        #     # Perform the merge operation
-        #     # "source" is the alias for the incoming DataFrame
-        #     # "target" is the alias for the existing Delta table
-        #     deltaTable.alias("target").merge(
-        #         source=df.alias("source"),
-        #         condition="target._id = source._id"
-        #     ).whenMatchedUpdateAll(  # Update all matching rows
-        #     ).whenNotMatchedInsertAll(  # Insert new rows that do not match
-        #     ).execute()
-        # else:
-        #     # If the Delta table does not exist, write the DataFrame as a new Delta table
-        #     (df
-        #      .coalesce(1)  # Coalesce to potentially reduce the number of files created
-        #      .write
-        #      .partitionBy(*self.__partitioning_cols)  # Use the class attribute for partitioning columns
-        #      .format("delta")
-        #      .mode("append")  # Mode is set to append to ensure the table is created if not exists
-        #      .option("mergeSchema", "true")  # Enable schema merging
-        #      .option("delta.columnMapping.mode","name")  # To support column naming flexibility, including non-English names
-        #      .option("path", target_path)  # Specify the target path for the Delta table
-        #      .save()
-        #      )
-
-        # todo: implement the merge methodology
         if self.__partitioning_cols:
             (df
              .coalesce(1)
@@ -78,6 +47,36 @@ class BaseTable(ABC):
              .option("path", f"{config.DATA_WAREHOUSE_S3_BUCKET_URL}/{self.__table_name}")
              .save()
              )
+
+            # todo: implement the merge methodology as this a production effort
+            # target_path = f"{config.DATA_WAREHOUSE_S3_BUCKET_URL}/{self.__table_name}"
+            # # Check if the Delta table exists at the target path
+            # if DeltaTable.isDeltaTable(self._spark, target_path):
+            #     # Load the DeltaTable object for the existing Delta table
+            #     deltaTable = DeltaTable.forPath(self._spark, target_path)
+            #
+            #     # Perform the merge operation
+            #     # "source" is the alias for the incoming DataFrame
+            #     # "target" is the alias for the existing Delta table
+            #     deltaTable.alias("target").merge(
+            #         source=df.alias("source"),
+            #         condition=f"{self.id_col} = {self.id_col}"
+            #     ).whenMatchedUpdateAll(  # Update all matching rows
+            #     ).whenNotMatchedInsertAll(  # Insert new rows that do not match
+            #     ).execute()
+            # else:
+            #     # If the Delta table does not exist, write the DataFrame as a new Delta table
+            #     (df
+            #      .coalesce(1)  # Coalesce to potentially reduce the number of files created
+            #      .write
+            #      .partitionBy(*self.__partitioning_cols)  # Use the class attribute for partitioning columns
+            #      .format("delta")
+            #      .mode("append")  # Mode is set to append to ensure the table is created if not exists
+            #      .option("mergeSchema", "true")  # Enable schema merging
+            #      .option("delta.columnMapping.mode","name")  # To support column naming flexibility, including non-English names
+            #      .option("path", target_path)  # Specify the target path for the Delta table
+            #      .save()
+            #      )
 
     def execute(self):
         dataframe = self.__project_cols(df=self.__source_dataframe)

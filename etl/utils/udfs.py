@@ -1,3 +1,5 @@
+import json
+
 from pyspark.sql import functions as F, types as T
 
 import hashlib
@@ -22,3 +24,29 @@ def hash_values(*values):
     hash_hex = hash_object.hexdigest()
 
     return hash_hex
+@F.udf(returnType=T.StringType())
+def struct_gef(root, path, default_value):
+    fields = path.split(".")
+    last_item = fields[-1]
+    fields = fields[:-1]
+
+    buffer = root
+    for field in fields:
+        if buffer is not None:
+            try:
+                if field in buffer.__fields__:
+                    buffer = buffer[field]
+                else:
+                    buffer = None
+            except AttributeError:  # In case buffer is not a Row but has no __fields__ attribute
+                buffer = None
+
+    if buffer is None:
+        return default_value
+    else:
+        # Assuming the final field refers to a simple string value within the Row
+        try:
+            return buffer[last_item]
+        except (KeyError, TypeError):
+            return default_value
+
